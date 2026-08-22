@@ -11,6 +11,7 @@ $stmt = $pdo->query('
 $posts = $stmt->fetchAll();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -41,7 +42,11 @@ $posts = $stmt->fetchAll();
                 <article>
                     <h3><?= htmlspecialchars($post['title']) ?></h3>
                     <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
-                    <small>Автор: <strong><?= htmlspecialchars($post['username']) ?></strong> | <?= $post['created_at'] ?></small>
+                    <small>Автор: <strong><?= htmlspecialchars($post['username']) ?></strong> | <?= $post['created_at'] ?>
+                <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] === $post['user_id']): ?>
+    <a href="delete_post.php?id=<?= $post['id'] ?>" style="color: red;">Удалить</a>
+<?php endif; ?>
+                </small>
                 </article>
                 <hr>
             <?php endforeach; ?>
